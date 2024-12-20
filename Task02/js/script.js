@@ -26,7 +26,7 @@ function buildSubTable() {
 
 function buildImage() {
     const img = document.createElement('img')
-    img.src = 'https://media.giphy.com/media/Ac0fCix8D3oN7DwCEB/giphy.gif?cid=ecf05e47ubz9naucob3viqnqj5yifkxjz9owjgbhe512nopd&ep=v1_gifs_search&rid=giphy.gif&ct=g'
+    img.src = 'images/gif.webp'
     img.alt = 'image'
     img.style = 'height: 140px;'
 
