@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-for</title>
+    
+    <script src="js/vue-3-5-13.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>v-for</h1>
+        <table cellpadding="0" cellspacing="0">
+            <tr v-for="imagesRow in imagesData" style="line-height: 0px">
+                <td v-for="image in imagesRow">
+                    <img :src="image" alt=""/>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+       const {
+            createApp,
+            ref
+        } = Vue
+        
+        const imagesData = ref([
+            [ 'images/image_part_001.png', 'images/image_part_002.png', 'images/image_part_003.png', 'images/image_part_004.png', 'images/image_part_005.png', 'images/image_part_006.png', 'images/image_part_007.png' ],
+            [ 'images/image_part_008.png', 'images/image_part_009.png', 'images/image_part_010.png', 'images/image_part_011.png', 'images/image_part_012.png', 'images/image_part_013.png', 'images/image_part_014.png' ],
+            [ 'images/image_part_015.png', 'images/image_part_016.png', 'images/image_part_017.png', 'images/image_part_018.png', 'images/image_part_019.png', 'images/image_part_020.png', 'images/image_part_021.png' ],
+            [ 'images/image_part_022.png', 'images/image_part_023.png', 'images/image_part_024.png', 'images/image_part_025.png', 'images/image_part_026.png', 'images/image_part_027.png', 'images/image_part_028.png' ]
+        ])
+
+        createApp({
+            setup() {
+                return {
+                    imagesData
+                }
+            }
+        }).mount("#app")
+    </script>
+</body>
+</html>

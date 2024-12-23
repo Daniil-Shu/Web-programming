@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watches</title>
+
+    <script src="js/vue-3-5-13.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>Watches</h1>
+        <p> Цельсии: <input v-model="c"/></p>
+        <p> Кельвины: <input v-model="k"/></p>
+        <p> Рёмеры: <input v-model="rem"/></p>
+        <p> Реомюры: <input v-model="reo"/></p>
+        <p> Ньютоны: <input v-model="n"/></p>
+        <p> Делили: <input v-model="d"/></p>
+        <p> Фаренгейты: <input v-model="f"/></p>
+    </div>
+
+    <script>
+       const {
+            createApp,
+            ref,
+            watch
+        } = Vue
+
+        const round = (val) => Math.round(val*1000)/1000
+        const checks = (newVal, oldVal) => newVal !== oldVal && Number(newVal)
+        
+        const fromCelsiusFormulas = {
+            'c': (val) => round(Number(val)),
+            'k': (val) => round(Number(val) + 273.15),
+            'rem': (val) => round(Number(val)*0.525 + 7.5),
+            'reo': (val) => round(Number(val) * 0.8),
+            'n': (val) => round(Number(val) * 0.33),
+            'd': (val) => round((100 - Number(val)) * 1.5),
+            'f': (val) => round((Number(val) * 1.8) + 32)
+        }
+
+        const toCelsiusFormulas = {
+            'c': (val) => round(Number(val)),
+            'k': (val) => round(Number(val) - 273.15),
+            'rem': (val) => round((Number(val) - 7.5)/0.525),
+            'reo': (val) => round(Number(val) / 0.8),
+            'n': (val) => round(Number(val) / 0.33),
+            'd': (val) => round(Number(val) / 1.5 + 100),
+            'f': (val) => round((Number(val) - 32) / 1.8)
+        }
+
+        const c = ref(0)
+        const k = ref(0)
+        const rem = ref(0)
+        const reo = ref(0)
+        const n = ref(0)
+        const d = ref(0)
+        const f = ref(0)
+
+        watch(c, (newValue, oldValue) => {
+            if (!checks(newValue, oldValue)) return
+            k.value = fromCelsiusFormulas['k'](c.value)
+            rem.value = fromCelsiusFormulas['rem'](c.value)
+            reo.value = fromCelsiusFormulas['reo'](c.value)
+            n.value = fromCelsiusFormulas['n'](c.value)
+            d.value = fromCelsiusFormulas['d'](c.value)
+            f.value = fromCelsiusFormulas['f'](c.value)
+        })
+
+        watch([k], (newValue, oldValue) => {
+            if (!checks(newValue, oldValue)) return
+            c.value = toCelsiusFormulas['k'](newValue)
+        })
+
+        watch([rem], (newValue, oldValue) => {
+            if (!checks(newValue, oldValue)) return
+            c.value = toCelsiusFormulas['rem'](newValue)
+        })
+
+        watch([reo], (newValue, oldValue) => {
+            if (!checks(newValue, oldValue)) return
+            c.value = toCelsiusFormulas['reo'](newValue)
+        })
+
+        watch([n], (newValue, oldValue) => {
+            if (!checks(newValue, oldValue)) return
+            c.value = toCelsiusFormulas['n'](newValue)
+        })
+
+        watch([d], (newValue, oldValue) => {
+            if (!checks(newValue, oldValue)) return
+            c.value = toCelsiusFormulas['d'](newValue)
+        })
+
+        watch([f], (newValue, oldValue) => {
+            if (!checks(newValue, oldValue)) return
+            c.value = toCelsiusFormulas['f'](newValue)
+        })
+
+        c.value = 25
+        
+
+        createApp({
+            setup() {
+                return {
+                    c,
+                    k,
+                    rem,
+                    reo,
+                    n,
+                    d,
+                    f
+                }
+            }
+        }).mount("#app")
+    </script>
+</body>
+</html>

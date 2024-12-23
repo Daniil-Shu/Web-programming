@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hooks</title>
+    
+    <script src="js/vue-3-5-13.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>Hooks</h1>
+        <templates-selector v-if="!showEndMessage" :templates="templates" :selected-template="currentTemplate"></templates-selector>
+        <p v-else>Список завершен: {{ templates }}</p>
+        <button v-on:click="buttonClicked" v-if="!showEndMessage">{{ isLast ? 'Завершить' : 'Вперед' }}</button>
+    </div>
+
+    <script>
+       const {
+            createApp,
+            ref,
+            computed,
+            onBeforeMount,
+            onMounted,
+            onBeforeUpdate,
+            onUpdated,
+            onBeforeUnmount,
+            onUnmounted
+        } = Vue
+
+        const templates = ref({
+            'Ф.И.О.': '',
+            'Серия паспорта': '',
+            'Номер паспорта': '',
+            'Должность': '',
+            'Доля ставки': ''
+        })
+
+        const currentTemplate = ref(Object.keys(templates.value)[0])
+
+        const showEndMessage = ref(false)
+
+        const templatesSelector = {
+            template: `<p>{{ selectedTemplate }}: <input type="text" v-model="templates[selectedTemplate]"></p>`,
+            props: ['templates', 'selectedTemplate'],
+            setup() {
+
+                onBeforeMount(() => {
+                    console.log('Child: onBeforeMount');
+                })
+
+                onMounted(() => {
+                    console.log('Child: onMounted');
+                })
+
+                onBeforeUpdate(() => {
+                    console.log('Child: onBeforeUpdate');
+                })
+
+                onUpdated(() => {
+                    console.log('Child: onUpdated');
+                })
+
+                onBeforeUnmount(() => {
+                    console.log('Child: onBeforeUnmount');
+                })
+
+                onUnmounted(() => {
+                    console.log('Child: onUnmounted');
+                })
+            }
+        }
+
+        createApp({
+            components: {
+                templatesSelector
+            },
+            setup() {
+
+                const isLast = computed(() => {
+                    const templatesNames = Object.keys(templates.value)
+
+                    return templatesNames.indexOf(currentTemplate.value) === templatesNames.length - 1
+                })
+
+                const buttonClicked = () => {
+                    const templatesNames = Object.keys(templates.value)
+                    const currentIndex = templatesNames.indexOf(currentTemplate.value)
+
+                    if (currentIndex < templatesNames.length - 1) currentTemplate.value = templatesNames[currentIndex + 1]
+                    else showEndMessage.value = true
+                }
+
+                onBeforeMount(() => {
+                    console.log('App: onBeforeMount');
+                })
+
+                onMounted(() => {
+                    console.log('App: onMounted');
+                })
+
+                onBeforeUpdate(() => {
+                    console.log('App: onBeforeUpdate');
+                })
+
+                onUpdated(() => {
+                    console.log('App: onUpdated');
+                })
+
+                onBeforeUnmount(() => {
+                    console.log('App: onBeforeUnmount');
+                })
+
+                onUnmounted(() => {
+                    console.log('App: onUnmounted');
+                })
+
+                return {
+                    templates,
+                    currentTemplate,
+                    buttonClicked,
+                    isLast,
+                    showEndMessage
+                }
+            }
+        }).mount("#app")
+    </script>
+</body>
+</html>
