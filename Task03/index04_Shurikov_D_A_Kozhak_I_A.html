@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Условная отрисовка</title>
+    
+    <script src="js/vue-2-6-14.js"></script>
+</head>
+<body>
+    <div id="app" style="max-width: 400px;">
+        <h1>Условная отрисовка</h1>
+
+        <div v-if="currentTemplate === 'Ф.И.О.'">
+            <p>Ф.И.О.: <input type="text" v-model="name"></p>
+        </div>
+        <div v-else-if="currentTemplate === 'Серия паспорта'">
+            <p>Серия паспорта: <input type="text" v-model="passport_series"></p>
+        </div>
+        <div v-else-if="currentTemplate === 'Номер паспорта'">
+            <p>Номер паспорта: <input type="text" v-model="passport_number"></p>
+        </div>
+        <div v-else-if="currentTemplate === 'Должность'">
+            <p>Должность: <input type="text" v-model="position"></p>
+        </div>
+        <div v-else-if="currentTemplate === 'Доля ставки'">
+            <p>Доля ставки: <input type="text" v-model="amount"></p>
+        </div>
+
+
+        <button v-on:click="buttonClicked" v-bind:disabled="!forward">Вперед</button>
+
+        <button v-on:click="buttonClicked" v-bind:disabled="forward">Назад</button>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                templates: ['Ф.И.О.', 'Серия паспорта', 'Номер паспорта', 'Должность', 'Доля ставки'],
+                forward: true,
+                currentTemplate: 'Ф.И.О.',
+                name: '',
+                passport_series: '',
+                passport_number: '',
+                position: '',
+                amount: ''
+            },
+            methods: {
+                buttonClicked() {
+                    const nextIndex = this.templates.indexOf(this.currentTemplate) + (this.forward ? 1 : -1)
+                    this.currentTemplate = this.templates[nextIndex]
+                    if ( ( (nextIndex === this.templates.length - 1) && this.forward ) || ( (nextIndex === 0) && !this.forward ) ) this.forward = !this.forward
+                }
+            }
+        });
+    </script>
+</body>
+</html>

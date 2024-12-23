@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Параметрическая связка</title>
+    
+    <script src="js/vue-2-6-14.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>Параметрическая связка</h1>
+        <table v-on:click="handleTableClick" style="border: 1px solid black;">
+            <tr>
+                <td>
+                    <input type="checkbox" disabled v-bind:checked="!!parseInt(binaryValue[0])"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <input type="checkbox" disabled v-bind:checked="!!parseInt(binaryValue[1])"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <input type="checkbox" disabled v-bind:checked="!!parseInt(binaryValue[2])"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <input type="checkbox" disabled v-bind:checked="!!parseInt(binaryValue[3])"/>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                currentValue: 0
+            },
+            methods: {
+                handleTableClick() {
+                    if (this.currentValue < 15) this.currentValue += 1
+                    else this.currentValue = 0
+                }
+            },
+            computed: {
+                binaryValue() {
+                    return this.currentValue.toString(2).padEnd(4, '0')
+                }
+            }
+        });
+    </script>
+</body>
+</html>

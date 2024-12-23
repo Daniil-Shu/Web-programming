@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Методы и события</title>
+    
+    <script src="js/vue-2-6-14.js"></script>
+</head>
+<body>
+    <div id="app" style="max-width: 400px;">
+        <h1>Методы и события</h1>
+        <input v-model="colorizingText" placeholder="Окрашиваемый текст"/>
+        <br>
+        <p style="text-align: right; font-size: 18px; font-weight: bold; font-family: 'Comic Sans MS';" v-bind:style="{ color: textColor }"> {{ colorizingText }} </p>
+        <br>
+        <input v-model="inputColor" placeholder="Цвет текста"/>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                colorizingText: 'Текст, размещённый в абзаце и выравненный по правому краю, выделенный «полужирным» размером в 18 пунктов, оформленный семейством «Comic Sans MS»',
+                inputColor: ''
+            },
+            computed: {
+                textColor() {
+                    if (!this.inputColor) return undefined
+
+                    switch(this.inputColor.toLowerCase().replaceAll('ё', 'е')) {
+                        case 'красный':
+                            return 'red'
+                        case 'оранжевый':
+                            return 'orange'
+                        case 'желтый':
+                            return 'yellow'
+                        case 'зеленый':
+                            return 'green'
+                        case 'голубой':
+                            return 'cyan'
+                        case 'синий':
+                            return 'blue'
+                        case 'фиолетовый':
+                            return 'violet'
+                    }
+
+                    return undefined
+                }
+            }
+        });
+    </script>
+</body>
+</html>
